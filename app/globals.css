@@ -1,0 +1,245 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────────────
+   Locator — light-daylight brand palette.
+   The whole site lives in the Locator-blue family. No dark-tech.
+   ───────────────────────────────────────────────────────────────────── */
+:root {
+  /* Brand blues — daytime UAE sky */
+  --sky-deep:   #1360ee;
+  --sky:        #0a84e3;
+  --sky-mid:    #08b2e0;
+  --sky-soft:   #79dffa;
+  --sky-paler:  #D6ECFB;
+  --sky-mist:   #EAF4FE;
+
+  --brand:        var(--sky);
+  --brand-deep:   var(--sky-deep);
+  --brand-light:  var(--sky-mid);
+
+  /* Warm UAE-sun accent */
+  --warm:       #FBEABC;
+  --warm-deep:  #F6C46A;
+
+  /* Surfaces */
+  --bg-base:    #FAFCFF;  /* page base */
+  --bg-mist:    #F1F6FE;  /* alternating section */
+  --bg-card:    #FFFFFF;  /* card surface */
+  --bg-tint:    #EAF2FE;  /* tinted card surface */
+
+  /* Lines & borders */
+  --line:         rgba(15, 27, 58, 0.08);
+  --line-strong:  rgba(15, 27, 58, 0.14);
+  --line-brand:   rgba(10, 132, 227, 0.22);
+
+  /* Text ink — on light surfaces */
+  --ink:         #0F1B3A;  /* primary on light */
+  --ink-muted:   #4A5878;
+  --ink-subtle:  #8190AD;
+
+  /* Text ink — on brand-blue surfaces */
+  --ink-on-brand:       #FFFFFF;
+  --ink-on-brand-muted: rgba(255,255,255,0.82);
+
+  /* Status */
+  --good: #14a86b;
+  --warn: #f59f0b;
+  --bad:  #e85a5a;
+
+  --ease-out:  cubic-bezier(.16,1,.3,1);
+  --ease-soft: cubic-bezier(.22,.61,.36,1);
+
+  --font-sans: 'Manrope', system-ui, sans-serif;
+  --font-display: 'Sora', system-ui, sans-serif;
+}
+
+* { border-color: var(--line); }
+
+html { scroll-behavior: auto; }
+
+body {
+  background: var(--bg-base);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+h1, h2, h3, .font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.035em;
+}
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ─── Brand surfaces & helpers ──────────────────────────────────────── */
+@layer components {
+  /* The hero/storytelling background — used by ScrollStage + CTA. */
+  .brand-sky {
+    background:
+      radial-gradient(60% 50% at 50% 90%, rgba(251,234,188,.55) 0%, rgba(251,234,188,0) 70%),
+      radial-gradient(34% 28% at 96% 6%, rgba(109,153,228,.55) 0%, rgba(109,153,228,0) 80%),
+      radial-gradient(32% 26% at 96% 96%, rgba(121,223,250,.45) 0%, rgba(121,223,250,0) 85%),
+      linear-gradient(180deg, #1360ee 0%, #0a84e3 38%, #08b2e0 72%, #3abede 100%);
+  }
+  /* Light page sections */
+  .surface-mist  { background: var(--bg-mist); }
+  .surface-card  { background: var(--bg-card); }
+
+  /* Premium light card */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,1) inset,
+      0 1px 2px rgba(15,27,58,0.04),
+      0 24px 48px -28px rgba(10,132,227,0.18);
+  }
+  .card-tinted {
+    background: linear-gradient(180deg, var(--bg-tint), var(--bg-card));
+    border: 1px solid var(--line-brand);
+    border-radius: 20px;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,1) inset,
+      0 24px 48px -28px rgba(10,132,227,0.22);
+  }
+  .card-dark {
+    background: linear-gradient(180deg, #0d1a36, #08163a);
+    border: 1px solid rgba(140,178,255,0.18);
+    border-radius: 22px;
+    color: var(--ink-on-brand);
+  }
+
+  /* Text helpers */
+  .ink-on-brand        { color: var(--ink-on-brand); }
+  .ink-on-brand-muted  { color: var(--ink-on-brand-muted); }
+
+  .text-gradient {
+    background: linear-gradient(180deg, var(--ink) 0%, #0a84e3 110%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .text-gradient-on-brand {
+    background: linear-gradient(180deg, #ffffff 0%, #FBEABC 130%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .blue-grad {
+    background: linear-gradient(105deg, #0a84e3, #08b2e0 60%, #1360ee);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .pill {
+    @apply inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em];
+    border: 1px solid var(--line-brand);
+    background: rgba(10,132,227,0.06);
+    color: var(--brand);
+  }
+  .pill-on-brand {
+    @apply inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/15 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-md;
+  }
+
+  .btn-brand {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-[13.5px] font-semibold text-white transition-transform duration-300;
+    background: linear-gradient(180deg, #5b9bff, #0a84e3);
+    box-shadow:
+      0 1px 0 rgba(255,255,255,0.4) inset,
+      0 10px 28px -10px rgba(10,132,227,0.6);
+  }
+  .btn-brand:hover { transform: translateY(-1px); }
+
+  .btn-light {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border bg-white px-5 py-2.5 text-[13.5px] font-semibold transition-colors duration-300;
+    border-color: var(--line-strong);
+    color: var(--ink);
+  }
+  .btn-light:hover { background: var(--bg-mist); }
+
+  .btn-on-light-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-white px-5 py-2.5 text-[13.5px] font-semibold transition-transform duration-300;
+    color: var(--brand);
+    box-shadow: 0 10px 28px -8px rgba(0,0,0,.25), 0 1px 0 rgba(255,255,255,.6) inset;
+  }
+  .btn-on-light-primary:hover { transform: translateY(-1px); }
+  .btn-on-light-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/40 bg-white/10 px-5 py-2.5 text-[13.5px] font-semibold text-white backdrop-blur-md transition-colors duration-300;
+  }
+  .btn-on-light-ghost:hover { background: rgba(255,255,255,0.2); }
+}
+
+@layer utilities {
+  .reveal-init { opacity: 0; transform: translateY(80px); }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-init { opacity: 1 !important; transform: none !important; }
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-base); }
+::-webkit-scrollbar-thumb { background: rgba(10,132,227,0.25); border-radius: 4px; }
+
+/* ─── Pinned scene layout ───────────────────────────────────────────── */
+.scene {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Always align from top so content never drifts under the fixed navbar. */
+  justify-content: flex-start;
+  gap: clamp(18px, 2.5vh, 32px);
+  /* Top padding clears the navbar (h-20 + py-5 ≈ 110px on desktop). */
+  padding: clamp(110px, 14vh, 150px) clamp(20px, 4vw, 40px) clamp(36px, 5vh, 56px);
+  text-align: center;
+  will-change: opacity, transform;
+}
+.fallback .scene { position: relative; inset: auto; min-height: 90vh; opacity: 1 !important; }
+.scene-head { display: flex; flex-direction: column; align-items: center; gap: 14px; max-width: 820px; }
+/* IMPORTANT: only set width here. Display/grid is owned by the element so
+   Tailwind utilities like `grid lg:grid-cols-[...]` win the cascade. */
+.scene-stage { width: 100%; max-width: 1080px; }
+
+/* GPS ping */
+@keyframes locator-ping {
+  0%   { transform: scale(0.6); opacity: 0.9; }
+  80%  { transform: scale(2.2); opacity: 0;   }
+  100% { transform: scale(2.2); opacity: 0;   }
+}
+.gps-ping {
+  position: absolute; inset: 0; border-radius: 9999px;
+  background: rgba(10, 132, 227, 0.45);
+  animation: locator-ping 2.4s cubic-bezier(0,0,0.2,1) infinite;
+}
+
+/* Map grid surface */
+.map-grid {
+  background-image:
+    linear-gradient(rgba(10,132,227,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10,132,227,0.08) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+.map-grid-on-brand {
+  background-image:
+    linear-gradient(rgba(255,255,255,0.10) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.10) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+/* Hairline divider between sections */
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line-strong), transparent);
+}
